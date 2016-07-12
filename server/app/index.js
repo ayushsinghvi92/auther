@@ -3,13 +3,30 @@
 var app = require('express')();
 var path = require('path');
 
+var session = require('express-session')
+
 app.use(require('./logging.middleware'));
+
+app.use(session({
+	secret: 'somethingsomething',
+	duration: 5 * 1000
+}));
+
+
+app.use(function (req, res, next) {
+  console.log('session', req.session)
+  next();
+});
 
 app.use(require('./request-state.middleware'));
 
 app.use(require('./statics.middleware'));
 
 app.use('/api', require('../api/api.router'));
+
+app.use('/login',require('./login.router'))
+
+app.use('/signup',require('./signup.router'))
 
 var validFrontendRoutes = ['/', '/stories', '/users', '/stories/:id', '/users/:id', '/signup', '/login'];
 var indexPath = path.join(__dirname, '..', '..', 'public', 'index.html');
