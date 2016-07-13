@@ -7,6 +7,7 @@
       glyphicon="search">
     </user-item>
     <user-item
+      ng-if="currentUser.id"
       is-form
       model="userAdd"
       class="list-group-item min-content"
@@ -14,6 +15,7 @@
       icon-click="addUser()">
     </user-item>
   </div>
+  <p>Bla{{currentUser}}</p>
   <br><br>
   <div class="user-list">
     <a
